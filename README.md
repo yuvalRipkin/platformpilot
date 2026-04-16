@@ -90,7 +90,7 @@ flowchart TD
 
 ## Compliance considerations
 
-PlatformPilot is designed with Israeli banking regulatory requirements (Bank of Israel Directive 362) in mind. This is a design-time constraint that shapes infrastructure decisions, not a compliance certification.
+PlatformPilot is designed with security concerns in mind. This is a design-time constraint that shapes infrastructure decisions, not a compliance certification.
 
 | Requirement | Implementation |
 |---|---|

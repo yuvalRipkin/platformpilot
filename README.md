@@ -88,9 +88,6 @@ flowchart TD
 
 **Compliance constraints at design time.** Retrofitting encryption, audit logging, and RBAC into running infrastructure is expensive and error-prone. KMS encryption is built into every Terraform module, CloudTrail is enabled by default, and IRSA trust policies are scoped correctly on first deploy.
 
-## Compliance considerations
-
-PlatformPilot is designed with Israeli banking regulatory requirements (Bank of Israel Directive 362) in mind. This is a design-time constraint that shapes infrastructure decisions, not a compliance certification.
 
 | Requirement | Implementation |
 |---|---|

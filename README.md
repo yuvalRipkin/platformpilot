@@ -14,7 +14,7 @@ An internal developer platform that provisions isolated Kubernetes environments 
 
 Platform teams spend too much time provisioning environments manually: the same namespace, RBAC bindings, and network policies, reproduced by hand for every team that asks. PlatformPilot treats environment provisioning as a reconciliation problem. A custom Kubernetes Operator watches `DevEnvironment` CRs and drives the cluster toward the declared state, with ordered provisioning, drift detection, and finalizer-based cleanup built into the reconciler.
 
-All infrastructure is managed as code, all deployments are GitOps-driven, credentials are OIDC-federated rather than long-lived keys, and compliance-aware design (Israeli banking Directive 362) is baked into every module.
+All infrastructure is managed as code, all deployments are GitOps-driven, credentials are OIDC-federated rather than long-lived keys, and compliance-aware design (Israeli banking Directive 362) shapes the infrastructure modules.
 
 ## Architecture
 
@@ -67,7 +67,7 @@ flowchart TD
 
 | Repository | Purpose | Stack |
 |---|---|---|
-| [platformpilot-operator](https://github.com/yuvalRipkin/platformpilot-operator) | Custom Kubernetes Operator that reconciles `DevEnvironment` CRs into namespaces, RBAC, quotas, and network isolation | Go, Operator SDK, controller-runtime, Prometheus |
+| [platformpilot-operator](https://github.com/yuvalRipkin/platformpilot-operator) | Custom Kubernetes Operator that reconciles `DevEnvironment` CRs into namespaces, RBAC, quotas, and network isolation | Go, controller-runtime, Prometheus |
 | [platformpilot-infra](https://github.com/yuvalRipkin/platformpilot-infra) | Terraform modules for all AWS infrastructure: VPC, EKS managed node groups, RDS PostgreSQL with pgvector extension, ECR | Terraform, AWS (EKS, RDS, VPC, KMS, S3, DynamoDB) |
 | [platformpilot-manifests](https://github.com/yuvalRipkin/platformpilot-manifests) | GitOps source of truth: ArgoCD Application CRDs, Helm value overrides, environment-specific patches | YAML, Kustomize/Helm, ArgoCD |
 | platformpilot-assistant *(planned)* | RAG-powered Slack bot that answers platform questions by querying ingested runbooks and architecture docs | Python, FastAPI, LangChain, pgvector, Slack Bolt |
@@ -90,7 +90,7 @@ flowchart TD
 
 ## Compliance considerations
 
-PlatformPilot is designed with security concerns in mind. This is a design-time constraint that shapes infrastructure decisions, not a compliance certification.
+PlatformPilot is designed with Israeli banking regulatory requirements (Bank of Israel Directive 362) in mind. This is a design-time constraint that shapes infrastructure decisions, not a compliance certification.
 
 | Requirement | Implementation |
 |---|---|
@@ -103,15 +103,22 @@ PlatformPilot is designed with security concerns in mind. This is a design-time 
 
 ## Roadmap
 
+**Shipped**
 - [x] Terraform modules: VPC (public + private subnets, NAT Gateway), EKS (managed node groups, IRSA), RDS (PostgreSQL + pgvector, encrypted), ECR
 - [x] Remote state backend: S3 + DynamoDB locking
-- [x] Kubernetes Operator with `DevEnvironment` CRD, reconciliation loop, finalizers, owner references, status conditions
-- [x] GitHub Actions CI: golangci-lint, go test, Trivy container scan, OIDC-federated ECR push
-- [x] ArgoCD GitOps: app-of-apps pattern, manifest repo separation
+- [x] Kubernetes Operator: `DevEnvironment` CRD, reconciliation loop, finalizers, owner references, status conditions
+- [x] GitHub Actions CI: golangci-lint, go test, Trivy, OIDC-federated ECR push
+- [x] ArgoCD GitOps: manifest repo separation, app-of-apps pattern
+
+**In progress**
 - [ ] RAG Platform Assistant: FastAPI + pgvector + Slack Bolt, Ollama for local LLM
-- [ ] Prometheus + Grafana observability stack (cluster health, operator metrics, RAG metrics)
+- [ ] Prometheus + Grafana observability stack: cluster health, operator metrics, RAG metrics
 - [ ] OPA/Gatekeeper admission policies
 
-## About
+**Certifications**
+- [ ] CKA — target May 2026
+- [ ] HashiCorp Terraform Associate — target May 2026
+
+## Contact
 
 Yuval Ripkin. Backend engineer with 4 years at Bank Hapoalim, now focused on platform engineering and infrastructure. Questions or feedback: yuval.ripkin@gmail.com

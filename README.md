@@ -14,7 +14,7 @@ An internal developer platform that provisions isolated Kubernetes environments 
 
 Platform teams spend too much time provisioning environments manually: the same namespace, RBAC bindings, and network policies, reproduced by hand for every team that asks. PlatformPilot treats environment provisioning as a reconciliation problem. A custom Kubernetes Operator watches `DevEnvironment` CRs and drives the cluster toward the declared state, with ordered provisioning, drift detection, and finalizer-based cleanup built into the reconciler.
 
-All infrastructure is managed as code, all deployments are GitOps-driven, credentials are OIDC-federated rather than long-lived keys, and compliance-aware design (Israeli banking Directive 362) shapes the infrastructure modules.
+All infrastructure is managed as code, all deployments are GitOps-driven, credentials are OIDC-federated rather than long-lived keys, and compliance-aware design shapes the infrastructure modules.
 
 ## Architecture
 
